@@ -1,0 +1,14 @@
+services:
+    backend:
+        container_name: backend-shopper-taxi-api
+        build: ./backend
+        ports:
+            - "8080:8080"
+        working_dir: /backend-shopper-taxi-api
+        command: dev
+        volumes:
+            - ./backend/src:/backend-shopper-taxi-api/src
+        healthcheck:
+            test: ["CMD", "lsof", "-t", "-i:8080"]
+            timeout: 10s
+            retries: 5
