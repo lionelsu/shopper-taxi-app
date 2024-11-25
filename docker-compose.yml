@@ -7,7 +7,6 @@ services:
         working_dir: /backend-shopper-taxi-api
         volumes:
             - ./backend/src:/backend-shopper-taxi-api/src
-            # - ./.env:/backend-shopper-taxi-api/.env
 
         env_file:
             - .env.docker
@@ -28,3 +27,12 @@ services:
             - POSTGRESQL_USERNAME=postgres
             - POSTGRESQL_PASSWORD=postgres
             - POSTGRESQL_DATABASE=shopper_taxi_app
+
+    frontend:
+        build:
+            context: ./frontend
+        container_name: frontend-shopper-taxi-api
+        ports:
+            - "80:80"
+        depends_on:
+            - backend
