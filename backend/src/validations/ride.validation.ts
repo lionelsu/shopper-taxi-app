@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi, { custom } from "joi";
 
 export const estimateRideSchema = Joi.object({
   origin: Joi.string().trim().required().messages({
@@ -14,7 +14,7 @@ export const estimateRideSchema = Joi.object({
       "any.required": "O ID do usuário é obrigatório."
   })}).custom((value, helpers) => {
   if (value.origin === value.destination) {
-      return helpers.error("any.custom", { message: "Os endereços de origem e destino não podem ser iguais." });
+    return helpers.message({ custom: "Os endereços de origem e destino não podem ser iguais." });
   }
   return value;
 });
