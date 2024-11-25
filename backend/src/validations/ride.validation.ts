@@ -68,3 +68,13 @@ export const validateConfirmRideSchema = Joi.object({
     }
     return value;
 });
+
+export const validateGetRidesSchema = Joi.object({
+  customer_id: Joi.string().trim().required().messages({
+    "string.empty": "O ID do usuário não pode estar em branco.",
+    "any.required": "O ID do usuário é obrigatório."
+  }),
+  driver_id: Joi.number().integer().optional().messages({
+    "number.base": "O ID do motorista deve ser um número inteiro."
+  })
+});
