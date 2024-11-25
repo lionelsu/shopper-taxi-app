@@ -1,4 +1,4 @@
-const drivers = [
+export const drivers = [
   {
       id: 1,
       name: "Homer Simpson",

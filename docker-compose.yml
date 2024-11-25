@@ -5,10 +5,12 @@ services:
         ports:
             - "8080:8080"
         working_dir: /backend-shopper-taxi-api
-        command: dev
         volumes:
             - ./backend/src:/backend-shopper-taxi-api/src
-            - ./.env:/backend-shopper-taxi-api/.env
+            # - ./.env:/backend-shopper-taxi-api/.env
+
+        env_file:
+            - .env.docker
         healthcheck:
             test: ["CMD", "lsof", "-t", "-i:8080"]
             timeout: 10s
