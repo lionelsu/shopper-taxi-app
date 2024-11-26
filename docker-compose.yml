@@ -16,6 +16,8 @@ services:
             retries: 5
         depends_on:
             - postgres
+        networks:
+            - taxi_app_network
 
     postgres:
         container_name: db-shopper-taxi-app
@@ -27,12 +29,22 @@ services:
             - POSTGRESQL_USERNAME=postgres
             - POSTGRESQL_PASSWORD=postgres
             - POSTGRESQL_DATABASE=shopper_taxi_app
+        networks:
+            - taxi_app_network
 
     frontend:
-        build:
-            context: ./frontend
+        build: ./frontend
         container_name: frontend-shopper-taxi-api
+        working_dir: /frontend-shopper-taxi-api
+        volumes:
+            - ./frontend/src:/frontend-shopper-taxi-api/src
         ports:
-            - "80:80"
+            - "5173:80"
         depends_on:
             - backend
+        networks:
+            - taxi_app_network
+
+networks:
+    taxi_app_network:
+        driver: bridge
