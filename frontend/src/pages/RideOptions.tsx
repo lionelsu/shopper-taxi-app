@@ -19,8 +19,8 @@ const RideOptions = () => {
     try {
       await axios.patch("http://localhost:8080/ride/confirm", {
         customer_id: "123",
-        origin: location.state.originalAddresses.origin, // Endereço original
-        destination: location.state.originalAddresses.destination, // Endereço original
+        origin: location.state.originalAddresses.origin,
+        destination: location.state.originalAddresses.destination,
         distance: routeResponse.distance.value / 1000,
         duration: routeResponse.duration.text,
         driver: { id: driverId, name: driverName },
