@@ -23,16 +23,15 @@ const RequestRide = () => {
     try {
       const response = await axios.post("http://localhost:8080/ride/estimate", formData);
   
-      // Navegar para a tela de opções com os dados retornados
       navigate("/options", {
         state: {
           options: response.data.options,
-          origin: response.data.origin, // Objeto com latitude/longitude
-          destination: response.data.destination, // Objeto com latitude/longitude
+          origin: response.data.origin,
+          destination: response.data.destination,
           routeResponse: response.data.routeResponse,
           originalAddresses: {
-            origin: formData.origin, // Endereço original
-            destination: formData.destination, // Endereço original
+            origin: formData.origin,
+            destination: formData.destination,
           },
         },
       });
