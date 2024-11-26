@@ -7,9 +7,7 @@ const RideOptions = () => {
   const navigate = useNavigate();
   const GOOGLE_API_KEY = "AIzaSyD6Ipcd3K0etGOfTy-Go3FxWOHv97TLvwE";
 
-  const { options, origin, destination, routeResponse } = location.state;
-
-  console.log(origin, destination);
+  const { estimateCostumer_id, options, origin, destination, routeResponse, originalAddresses } = location.state;
 
   const [error, setError] = useState<string | null>(null);
 
@@ -18,9 +16,9 @@ const RideOptions = () => {
   
     try {
       await axios.patch("http://localhost:8080/ride/confirm", {
-        customer_id: "123",
-        origin: location.state.originalAddresses.origin,
-        destination: location.state.originalAddresses.destination,
+        customer_id: estimateCostumer_id,
+        origin: originalAddresses.origin,
+        destination: originalAddresses.destination,
         distance: routeResponse.distance.value / 1000,
         duration: routeResponse.duration.text,
         driver: { id: driverId, name: driverName },
