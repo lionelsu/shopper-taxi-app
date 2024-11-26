@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
@@ -9,6 +10,8 @@ const RequestRide = () => {
   });
   const [error, setError] = useState<string | null>(null);
 
+  const navigate = useNavigate();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -19,8 +22,20 @@ const RequestRide = () => {
 
     try {
       const response = await axios.post("http://localhost:8080/ride/estimate", formData);
-      console.log(response.data); // Exibe os dados retornados no console
-      // Aqui você pode redirecionar para a tela de opções de viagem
+  
+      // Navegar para a tela de opções com os dados retornados
+      navigate("/options", {
+        state: {
+          options: response.data.options,
+          origin: response.data.origin, // Objeto com latitude/longitude
+          destination: response.data.destination, // Objeto com latitude/longitude
+          routeResponse: response.data.routeResponse,
+          originalAddresses: {
+            origin: formData.origin, // Endereço original
+            destination: formData.destination, // Endereço original
+          },
+        },
+      });
     } catch (err: any) {
       setError(err.response?.data?.error_description || "Erro ao estimar a viagem");
     }

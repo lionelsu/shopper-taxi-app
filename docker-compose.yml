@@ -38,6 +38,8 @@ services:
         working_dir: /frontend-shopper-taxi-api
         volumes:
             - ./frontend/src:/frontend-shopper-taxi-api/src
+        env_file:
+            - .env.docker
         ports:
             - "5173:80"
         depends_on:
