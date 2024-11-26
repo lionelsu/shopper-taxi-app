@@ -15,29 +15,29 @@ export const estimateRide = async (req: Request, res: Response, next: NextFuncti
   }
 
   try {
-      const originCoordinates = await getCoordinates(origin)
-      const destinationCoordinates = await getCoordinates(destination)
+    const originCoordinates = await getCoordinates(origin)
+    const destinationCoordinates = await getCoordinates(destination)
 
-      const routeResponse = await getDistanceFromGoogleMaps(origin, destination);
+    const routeResponse = await getDistanceFromGoogleMaps(origin, destination);
 
-      const { distance, duration } = routeResponse;
+    const { distance, duration } = routeResponse;
 
-      const distanceInKm = distance.value / 1000
-      const durationInText = duration.text
-      
-      const availableDrivers = getAvailableDrivers(distanceInKm);
+    const distanceInKm = distance.value / 1000
+    const durationInText = duration.text
+    
+    const availableDrivers = getAvailableDrivers(distanceInKm);
 
-      return res.status(200).json({
-        origin: { latitude: originCoordinates.lat, longitude: originCoordinates.lng },
-        destination: { latitude: destinationCoordinates.lat, longitude: destinationCoordinates.lng },
-        distance: distanceInKm,
-        duration: durationInText,
-        options: availableDrivers,
-        routeResponse
-      });
+    return res.status(200).json({
+      origin: { latitude: originCoordinates.lat, longitude: originCoordinates.lng },
+      destination: { latitude: destinationCoordinates.lat, longitude: destinationCoordinates.lng },
+      distance: distanceInKm,
+      duration: durationInText,
+      options: availableDrivers,
+      routeResponse
+    });
   } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: "Erro ao estimar a viagem." });
+    console.error(error);
+    return res.status(500).json({ error: "Erro ao estimar a viagem." });
   }
 };
 

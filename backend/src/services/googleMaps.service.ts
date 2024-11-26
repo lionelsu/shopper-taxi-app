@@ -1,14 +1,15 @@
 import axios from 'axios';
+import { GoogleDistanceElement, GoogleGeocodingResponse, GoogleLocation } from '../types/GoogleMaps';
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || '';
 
-export const getCoordinates = async (address: string) => {
+export const getCoordinates = async (address: string): Promise<GoogleLocation> => {
     const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
       address
     )}&key=${GOOGLE_API_KEY}`;
   
     try {
-      const response = await axios.get(geocodingUrl);
+      const response = await axios.get<GoogleGeocodingResponse>(geocodingUrl);
       const data = response.data;
   
       if (data.status !== "OK" || !data.results[0]) {
@@ -24,7 +25,7 @@ export const getCoordinates = async (address: string) => {
   };
   
 
-export const getDistanceFromGoogleMaps = async (origin: string, destination: string) => {
+export const getDistanceFromGoogleMaps = async (origin: string, destination: string): Promise<GoogleDistanceElement> => {
     
     const googleMapsUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(
         origin
