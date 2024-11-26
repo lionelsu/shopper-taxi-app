@@ -5,7 +5,7 @@ import axios from "axios";
 const RideOptions = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const GOOGLE_API_KEY = "AIzaSyD6Ipcd3K0etGOfTy-Go3FxWOHv97TLvwE";
+  const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY as string;
 
   const { estimateCostumer_id, options, origin, destination, routeResponse, originalAddresses } = location.state;
 
