@@ -22,9 +22,10 @@ const RequestRide = () => {
 
     try {
       const response = await axios.post("http://localhost:8080/ride/estimate", formData);
-  
+
       navigate("/options", {
         state: {
+          estimateCostumer_id: formData.customer_id,
           options: response.data.options,
           origin: response.data.origin,
           destination: response.data.destination,
