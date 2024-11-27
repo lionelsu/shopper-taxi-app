@@ -4,8 +4,10 @@ import { getDistanceFromGoogleMaps, getCoordinates } from "../services/googleMap
 import { getAvailableDrivers } from "../data/drivers";
 import { drivers } from "../data/drivers";
 import { prisma } from "../prismaClient";
+import { FormattedRide, Ride } from "../interfaces/Ride";
+import { EstimateRideResponse } from "../types/Ride";
 
-export const estimateRide = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+export const estimateRide = async (req: Request, res: Response, next: NextFunction): Promise<Response<EstimateRideResponse>> => {
   const { origin, destination, customer_id } = req.body;
 
   const { error } = estimateRideSchema.validate({ origin, destination, userId: customer_id });
@@ -41,7 +43,7 @@ export const estimateRide = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
-export const confirmRide = async (req: Request, res: Response): Promise<any> => {
+export const confirmRide = async (req: Request, res: Response): Promise<Response> => {
   const { origin, destination, customer_id, distance, duration, driver, value } = req.body;
 
   const { error } = validateConfirmRideSchema.validate(req.body);
@@ -79,7 +81,7 @@ export const confirmRide = async (req: Request, res: Response): Promise<any> => 
   }
 };
 
-export const getRides = async (req: Request, res: Response): Promise<any> => {
+export const getRides = async (req: Request, res: Response): Promise<Response> => {
   const { customer_id } = req.params;
   const { driver_id } = req.query;
 
@@ -115,32 +117,6 @@ export const getRides = async (req: Request, res: Response): Promise<any> => {
         error_code: "NO_RIDES_FOUND",
         error_description: "Nenhum registro encontrado"
       });
-    }
-
-    interface Ride {
-      id: number;
-      createdAt: Date;
-      origin: string;
-      destination: string;
-      distance: number;
-      duration: string;
-      driverId: number;
-      driverName: string;
-      value: number;
-    }
-
-    interface FormattedRide {
-      id: number;
-      date: Date;
-      origin: string;
-      destination: string;
-      distance: number;
-      duration: string;
-      driver: {
-        id: number;
-        name: string;
-      };
-      value: number;
     }
 
     const formattedRides: FormattedRide[] = rides.map((ride: Ride) => ({
