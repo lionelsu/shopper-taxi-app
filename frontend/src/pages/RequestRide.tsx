@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import ErrorMessage from "../components/ErrorMessage";
+import InputField from "../components/InputField";
 
 const RequestRide = () => {
   const [formData, setFormData] = useState({
@@ -42,39 +44,30 @@ const RequestRide = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="form-container">
       <h1>Solicitação de Viagem</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>ID do Usuário:</label>
-          <input
-            type="text"
-            name="customer_id"
-            value={formData.customer_id}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Endereço de Origem:</label>
-          <input
-            type="text"
-            name="origin"
-            value={formData.origin}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Endereço de Destino:</label>
-          <input
-            type="text"
-            name="destination"
-            value={formData.destination}
-            onChange={handleChange}
-          />
-        </div>
+        <InputField
+          label="ID do Usuário:"
+          name="customer_id"
+          value={formData.customer_id}
+          onChange={handleChange}
+        />
+        <InputField
+          label="Endereço de Origem:"
+          name="origin"
+          value={formData.origin}
+          onChange={handleChange}
+        />
+        <InputField
+          label="Endereço de Destino:"
+          name="destination"
+          value={formData.destination}
+          onChange={handleChange}
+        />
         <button type="submit">Estimar Viagem</button>
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <ErrorMessage message={error} />
     </div>
   );
 };
