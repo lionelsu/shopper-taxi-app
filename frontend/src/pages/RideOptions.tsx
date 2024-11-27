@@ -38,10 +38,8 @@ const RideOptions = () => {
     <div style={{ padding: "20px" }}>
       <h1>Opções de Viagem</h1>
 
-      {/* Mapa Estático */}
       <StaticMap origin={origin} destination={destination} apiKey={GOOGLE_API_KEY} />
 
-      {/* Lista de Motoristas */}
       <ul style={{ listStyleType: "none", padding: 0 }}>
         {options.map((option: any) => (
           <DriverOption
@@ -57,7 +55,6 @@ const RideOptions = () => {
         ))}
       </ul>
 
-      {/* Mensagem de Erro */}
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
